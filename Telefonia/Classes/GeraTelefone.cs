@@ -10,22 +10,34 @@ namespace Telefonia.Classes
 {
     public class GeraTelefone
     {
-        public string Sigla { get; set; }
+        //Aqui possuímos os atributos Sigla e Ddd para consumirmos o arquivo JSON
+        public string? Sigla { get; set; }
         [JsonProperty("Ddds")]
-        public string[] Ddd { get; set; }
-        public string Telefone(string? uf, bool telefoneFixo, bool comTraco, bool comDdd)
+        public string[]? Ddd { get; set; }
+
+        /*
+         * Método Telefone é criado com os parâmetros uf e telefoneFixo
+         * 
+         * -- uf: recebe a sigla do estado em que deseja que o número seja gerado
+         * -- telefoneFixo: recebe um booleano, indicando se o número desejado é
+         * um telefone fixo ou não.
+        */
+        public string Telefone(string? uf, bool telefoneFixo)
         {
+            //É usado o StreamReader do System.IO para lermos o arquivo JSON
             using (StreamReader sr = new StreamReader("../../../JSONs/dddsPorEstado.json"))
             {
+                //O arquivo é lido
+                //E deserializamos em uma lista do tipo GeraTelefone
                 var json = sr.ReadToEnd();
                 var list = new List<GeraTelefone>();
                 list = JsonConvert.DeserializeObject<List<GeraTelefone>>(json);
 
                 var sigla = uf;
-                string ddd = "";
                 string telefone = "";
                 Random rnd = new Random();
 
+                //Se não houver sigla, o DDD é gerado automáticamente
                 if(sigla == null)
                 {
                     if (telefoneFixo == false)
@@ -43,6 +55,7 @@ namespace Telefonia.Classes
                     
                     return telefoneFormatado;
                 }
+                //Caso contrário, comparamos a sigla informada com algum DDD existente no JSON
                 else 
                 {
                     List<string> ddds = new List<string>();
@@ -55,6 +68,7 @@ namespace Telefonia.Classes
                         }
                     }
 
+                    //Adicionamos o DDD encontrado, caso tenha mais de um, é escolhido aleatoriamente
                     telefone += ddds[rnd.Next(ddds.Count())];
 
                     if (telefoneFixo == false)
@@ -76,16 +90,32 @@ namespace Telefonia.Classes
 
             }
         }
+        /*
+         * Aqui temos o Método FormataNumero, que é privado, pois, Classes
+         * externas não podem acessá-lo
+         * 
+         * -- telefone: é informado o número de telefone a ser formatado
+        */
         private string FormataNumero(string telefone)
         {
+            var telefoneFormatado = "";
+            
+            //Usamos a biblioteca libphonenumber para formatar no padrão nacional
             var phoneUtil = PhoneNumberUtil.GetInstance();
             var numberProto = phoneUtil.Parse(telefone, "BR");
-            var telefoneFormatado = phoneUtil.Format(numberProto, PhoneNumberFormat.NATIONAL);
-
+            telefoneFormatado = phoneUtil.Format(numberProto, PhoneNumberFormat.NATIONAL); 
+                
             return telefoneFormatado;
         }
+        /*
+         * Aqui temos o Método GeraNumero que é privado, responsável por gerar o 
+         * número de telefone, verificando se ele é fixo ou não
+         * 
+         * -- telefoneFixo: é informado por um booleano se o número desejado é fixo
+        */
         private string GeraNumero(bool telefoneFixo)
         {
+            //Por serem números aletórios, geramos uma variável Random para este método
             Random rnd = new Random();
             var telefone = "";
 
@@ -95,6 +125,7 @@ namespace Telefonia.Classes
                 {
                     if(i == 0)
                     {
+                        //Telefone fixo possui prefixos de 2 a 5
                         telefone += rnd.Next(2, 5).ToString();
                     }
                     telefone += rnd.Next(0, 9).ToString();
@@ -107,6 +138,7 @@ namespace Telefonia.Classes
                 {
                     if (i == 0)
                     {
+                        //Telefone móvel possui prefixo 9
                         telefone += "9";
                     }
 
@@ -116,7 +148,10 @@ namespace Telefonia.Classes
                 return telefone;
             }
         }
-
+        /*
+         * Aqui temos o Método GeraDdd que é privado, é responsável por gerar o DDD
+         * que não foi informado anteriormente
+        */
         private string GeraDdd()
         {
             Random rnd = new Random();

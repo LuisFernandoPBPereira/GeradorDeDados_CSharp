@@ -9,6 +9,7 @@ namespace Telefonia.Classes
 {
     public class Cliente
     {
+        //Aqui criamos o construtor de Cliente com todos os dados
         public Cliente(string nome, string email, string dataNascimento, string? telefone = null)
         {
             Nome = nome;
@@ -23,6 +24,7 @@ namespace Telefonia.Classes
         public string DataNascimento { get; set; }
         public string? Telefone { get; set; }
 
+        //Aqui temos o Método Resultado, que é responsável por mostrar o resultado obtido
         public void Resultado()
         {
             Console.WriteLine(Nome);
