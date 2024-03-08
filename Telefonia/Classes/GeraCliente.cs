@@ -18,22 +18,25 @@ namespace Telefonia.Classes
 
                 list = JsonConvert.DeserializeObject<List<Cliente>>(json);
 
-                string[] array = new string[3];
+                string[] array = new string[4];
                 int cont = 0;
 
                 Random rnd = new Random();
 
                 string nome, email, dataNasc, telefone;
 
-                nome = list[rnd.Next(list.Count)].Nome;
-                email = list[rnd.Next(list.Count)].Email;
-                dataNasc = list[rnd.Next(list.Count)].DataNascimento;
-                //telefone = list[rnd.Next(list.Count)].Telefone;
+                int indice = rnd.Next(list.Count);
+
+                nome = list[indice].Nome;
+                email = list[indice].Email;
+                dataNasc = list[indice].DataNascimento;
+                var tel = new GeraTelefone();
+                
 
                 array[0] = nome;
                 array[1] = email;
                 array[2] = dataNasc;
-                //array[3] = telefone;
+                array[3] = tel.Telefone("SP", true, true, false);
 
                 return array;
             }

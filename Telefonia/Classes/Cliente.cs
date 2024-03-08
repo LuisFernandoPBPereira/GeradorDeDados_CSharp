@@ -28,7 +28,7 @@ namespace Telefonia.Classes
             Console.WriteLine(Nome);
             Console.WriteLine(Email);
             Console.WriteLine(DataNascimento);
-            //Console.WriteLine(Telefone);
+            Console.WriteLine(Telefone);
         }
     }
 }

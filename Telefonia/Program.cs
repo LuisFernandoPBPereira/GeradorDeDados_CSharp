@@ -8,6 +8,6 @@ string[] dados = new string[3];
 var dadosCliente = new GeraCliente();
 dados = dadosCliente.GetCliente();
 
-Cliente cliente = new Cliente(dados[0], dados[1], dados[2]);
+Cliente cliente = new Cliente(dados[0], dados[1], dados[2], dados[3]);
 
 cliente.Resultado();
