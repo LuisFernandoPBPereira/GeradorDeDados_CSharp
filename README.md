@@ -1,6 +1,6 @@
 <h1 align="center">Gerador de Dados</h1>
 
-<br/><br/>
+<br/>
 
 <h2>Sobre:</h2>
 <br/>
@@ -19,3 +19,19 @@
   <li>Newtonsoft</li>
   <li>libphonenumber</li>
 </ul>
+
+<h2>Como funciona?</h2>
+<br/>
+
+<p>Pelo motivo de este projeto ser relativamente pequeno, não foi seguido algum padrão de arquitetura, mas existe a boa prática de separação de responsabilidades.</p>
+<br/>
+
+<h2>Classes:</h2>
+<ul>
+  <li><h3>Cliente:</h3> Contém os dados do cliente (serão gerados dados de um cliente, com base nesta classe).</li>
+  <li><h3>GeraCliente:</h3> Responsável por gerar dados básicos de um cliente (exceto o telefone).</li>
+  <li><h3>GeraTelefone:</h3> Responsável por gerar um número de telefone, seja fixo ou móvel, formatado ou não.</li>
+</ul>
+<br/>
+<p>Ao final, todos os dados são reunidos na Program.cs, instanciando um objeto "Cliente", chamando seu método "DadosGerados".</p>
+
