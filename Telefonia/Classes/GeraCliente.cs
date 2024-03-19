@@ -16,35 +16,41 @@ namespace Telefonia.Classes
         public string[] GetCliente()
         {
             //Usamos StreamReader do System.IO
-            using (StreamReader sr = new StreamReader("../../../JSONs/clientes.json"))
+            using (StreamReader streamReader = new StreamReader("../../../JSONs/clientes.json"))
             {
                 //Lemos o arquivo e criamos as devidas variáveis 
-                var json = sr.ReadToEnd();
-                var list = new List<Cliente>();
-                string[] array = new string[4];
-                string nome, email, dataNasc, telefone;
-                Random rnd = new Random();
+                var json = streamReader.ReadToEnd();
+                var listaClientes = new List<Cliente>();
+                string[] dadosCliente = new string[4];
+                string nome, email, dataNasc, telefone, uf;
+                Random random = new Random();
                 var tel = new GeraTelefone();
 
+                bool telefoneFixo = false, 
+                     comDdd       = false, 
+                     comTraco     = false;
+
                 //Deserializamos o arquivo em uma lista do tipo Cliente
-                list = JsonConvert.DeserializeObject<List<Cliente>>(json);
+                listaClientes = JsonConvert.DeserializeObject<List<Cliente>>(json);
 
                 //Criamos um índice para pegarmos apenas um cliente
-                int indice = rnd.Next(list.Count);
+                int indice = random.Next(listaClientes.Count);
 
-                nome = list[indice].Nome;
-                email = list[indice].Email;
-                dataNasc = list[indice].DataNascimento;
-                //Parâmetros: UF, Telefone Fixo, Com DDD, Com Traço
-                telefone = tel.Telefone("SP", false, false, true);
+                nome = listaClientes[indice].Nome;
+                email = listaClientes[indice].Email;
+                dataNasc = listaClientes[indice].DataNascimento;
+
+                uf = "SP";
+
+                telefone = tel.Telefone(uf, telefoneFixo, comDdd, comTraco);
 
                 //Passamos os dados para um array, para retornarmos ao construtor
-                array[0] = nome;
-                array[1] = email;
-                array[2] = dataNasc;
-                array[3] = telefone;
+                dadosCliente[0] = nome;
+                dadosCliente[1] = email;
+                dadosCliente[2] = dataNasc;
+                dadosCliente[3] = telefone;
 
-                return array;
+                return dadosCliente;
             }
         }
     }

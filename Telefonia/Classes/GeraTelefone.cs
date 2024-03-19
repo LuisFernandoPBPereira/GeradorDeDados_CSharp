@@ -25,17 +25,17 @@ namespace Telefonia.Classes
         public string Telefone(string? uf, bool telefoneFixo, bool comDdd, bool comTraco)
         {
             //É usado o StreamReader do System.IO para lermos o arquivo JSON
-            using (StreamReader sr = new StreamReader("../../../JSONs/dddsPorEstado.json"))
+            using (StreamReader streamReader = new StreamReader("../../../JSONs/dddsPorEstado.json"))
             {
                 //O arquivo é lido
                 //E deserializamos em uma lista do tipo GeraTelefone
-                var json = sr.ReadToEnd();
-                var list = new List<GeraTelefone>();
-                list = JsonConvert.DeserializeObject<List<GeraTelefone>>(json);
+                var json = streamReader.ReadToEnd();
+                var listaSiglasEDdds = new List<GeraTelefone>();
+                listaSiglasEDdds = JsonConvert.DeserializeObject<List<GeraTelefone>>(json);
 
                 var sigla = uf;
                 string telefone = "";
-                Random rnd = new Random();
+                Random random = new Random();
 
                 //Se não houver sigla, o DDD é gerado automáticamente
                 if(sigla == null)
@@ -59,17 +59,17 @@ namespace Telefonia.Classes
                 else 
                 {
                     List<string> ddds = new List<string>();
-                    foreach(var item in list)
+                    foreach(var listaItem in listaSiglasEDdds)
                     {
-                        if (sigla == item.Sigla)
+                        if (sigla == listaItem.Sigla)
                         {
-                            for(int i=0; i<item.Ddd.Length; i++)
-                                ddds.Add(item.Ddd[i]);
+                            for(int i=0; i< listaItem.Ddd.Length; i++)
+                                ddds.Add(listaItem.Ddd[i]);
                         }
                     }
 
                     //Adicionamos o DDD encontrado, caso tenha mais de um, é escolhido aleatoriamente
-                    telefone += ddds[rnd.Next(ddds.Count())];
+                    telefone += ddds[random.Next(ddds.Count())];
 
                     if (telefoneFixo == false)
                     {
@@ -137,7 +137,7 @@ namespace Telefonia.Classes
         private string GeraNumero(bool telefoneFixo)
         {
             //Por serem números aletórios, geramos uma variável Random para este método
-            Random rnd = new Random();
+            Random random = new Random();
             var telefone = "";
 
             if (telefoneFixo)
@@ -147,9 +147,9 @@ namespace Telefonia.Classes
                     if(i == 0)
                     {
                         //Telefone fixo possui prefixos de 2 a 5
-                        telefone += rnd.Next(2, 5).ToString();
+                        telefone += random.Next(2, 5).ToString();
                     }
-                    telefone += rnd.Next(0, 9).ToString();
+                    telefone += random.Next(0, 9).ToString();
                 }
                 return telefone;
             }
@@ -163,7 +163,7 @@ namespace Telefonia.Classes
                         telefone += "9";
                     }
 
-                    telefone += rnd.Next(0, 9).ToString();
+                    telefone += random.Next(0, 9).ToString();
                 }
 
                 return telefone;
@@ -175,12 +175,12 @@ namespace Telefonia.Classes
         */
         private string GeraDdd()
         {
-            Random rnd = new Random();
+            Random random = new Random();
             string ddd = "";
 
             for (int i = 0; i < 2; i++)
             {
-                ddd += rnd.Next(0, 9).ToString();
+                ddd += random.Next(0, 9).ToString();
                 if (ddd == "25" || ddd == "80")
                 {
                     i = 0;

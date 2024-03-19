@@ -5,32 +5,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Telefonia.Classes
+namespace Telefonia.Classes;
+
+public class Cliente
 {
-    public class Cliente
+    //Aqui criamos o construtor de Cliente com todos os dados
+    public Cliente(string nome, string email, string dataNascimento, string? telefone = null)
     {
-        //Aqui criamos o construtor de Cliente com todos os dados
-        public Cliente(string nome, string email, string dataNascimento, string? telefone = null)
-        {
-            Nome = nome;
-            Email = email;
-            DataNascimento = dataNascimento;
-            Telefone = telefone;
-        }
+        Nome = nome;
+        Email = email;
+        DataNascimento = dataNascimento;
+        Telefone = telefone;
+    }
 
-        public string Nome { get; set; }
-        public string Email { get; set; }
-        [JsonProperty("Data_Nasc")]
-        public string DataNascimento { get; set; }
-        public string? Telefone { get; set; }
+    public string Nome { get; set; }
+    public string Email { get; set; }
+    [JsonProperty("Data_Nasc")]
+    public string DataNascimento { get; set; }
+    public string? Telefone { get; set; }
 
-        //Aqui temos o Método Resultado, que é responsável por mostrar o resultado obtido
-        public void Resultado()
-        {
-            Console.WriteLine(Nome);
-            Console.WriteLine(Email);
-            Console.WriteLine(DataNascimento);
-            Console.WriteLine(Telefone);
-        }
+    //Aqui temos o Método DadosGerados, que é responsável por mostrar o resultado obtido
+    public void DadosGerados()
+    {
+        Console.WriteLine(Nome);
+        Console.WriteLine(Email);
+        Console.WriteLine(DataNascimento);
+        Console.WriteLine(Telefone);
     }
 }
