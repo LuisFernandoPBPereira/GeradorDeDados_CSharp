@@ -22,7 +22,7 @@ namespace Telefonia.Classes
          * -- telefoneFixo: recebe um booleano, indicando se o número desejado é
          * um telefone fixo ou não.
         */
-        public string Telefone(string? uf, bool telefoneFixo)
+        public string Telefone(string? uf, bool telefoneFixo, bool comDdd, bool comTraco)
         {
             //É usado o StreamReader do System.IO para lermos o arquivo JSON
             using (StreamReader sr = new StreamReader("../../../JSONs/dddsPorEstado.json"))
@@ -43,7 +43,7 @@ namespace Telefonia.Classes
                     if (telefoneFixo == false)
                     {
                         telefone += GeraDdd();
-                        telefone += GeraNumero(telefoneFixo);
+                        telefone += GeraNumero(telefoneFixo);;
                     }
                     else
                     {
@@ -51,7 +51,7 @@ namespace Telefonia.Classes
                         telefone += GeraNumero(telefoneFixo);
                     }
 
-                    string telefoneFormatado = FormataNumero(telefone); ; 
+                    string telefoneFormatado = FormataNumero(telefone, comDdd, comTraco); ; 
                     
                     return telefoneFormatado;
                 }
@@ -75,14 +75,14 @@ namespace Telefonia.Classes
                     {
 
                         telefone += GeraNumero(telefoneFixo);
-                        string telefoneFormatado = FormataNumero(telefone);
+                        string telefoneFormatado = FormataNumero(telefone, comDdd, comTraco);
 
                         return telefoneFormatado;
                     }
                     else
                     {
                         telefone += GeraNumero(telefoneFixo);
-                        string telefoneFormatado = FormataNumero(telefone);
+                        string telefoneFormatado = FormataNumero(telefone, comDdd, comTraco);
 
                         return telefoneFormatado;
                     }
@@ -96,15 +96,36 @@ namespace Telefonia.Classes
          * 
          * -- telefone: é informado o número de telefone a ser formatado
         */
-        private string FormataNumero(string telefone)
+        private string FormataNumero(string telefone, bool comDdd, bool comTraco)
         {
             var telefoneFormatado = "";
-            
             //Usamos a biblioteca libphonenumber para formatar no padrão nacional
             var phoneUtil = PhoneNumberUtil.GetInstance();
             var numberProto = phoneUtil.Parse(telefone, "BR");
-            telefoneFormatado = phoneUtil.Format(numberProto, PhoneNumberFormat.NATIONAL); 
-                
+            telefoneFormatado = phoneUtil.Format(numberProto, PhoneNumberFormat.NATIONAL);
+
+            if (comTraco == false && comDdd == true)
+            {
+                if(telefoneFormatado.Length == 14)
+                    telefoneFormatado = telefoneFormatado.Remove(9, 1);
+
+                else if (telefoneFormatado.Length == 15)
+                    telefoneFormatado = telefoneFormatado.Remove(10, 1);
+
+                return telefoneFormatado;
+            }
+            else if (comDdd == false && comTraco == true)
+            {
+                return telefoneFormatado;   
+            }
+            else if (comDdd == false && comTraco == false)
+            {
+                telefone = telefone.Remove(0, 1);
+                telefone = telefone.Remove(0, 1);
+
+                return telefone;
+            }
+
             return telefoneFormatado;
         }
         /*

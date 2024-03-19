@@ -35,7 +35,8 @@ namespace Telefonia.Classes
                 nome = list[indice].Nome;
                 email = list[indice].Email;
                 dataNasc = list[indice].DataNascimento;
-                telefone = tel.Telefone("SP", true);
+                //Parâmetros: UF, Telefone Fixo, Com DDD, Com Traço
+                telefone = tel.Telefone("SP", false, false, true);
 
                 //Passamos os dados para um array, para retornarmos ao construtor
                 array[0] = nome;
