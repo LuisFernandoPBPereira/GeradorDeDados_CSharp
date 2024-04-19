@@ -5,10 +5,11 @@
 <h2>Sobre:</h2>
 <br/>
 
-<p>
-  Esta aplicação retorna dados fictícios de clientes, como: nome, email, data de nascimento e telefone. <br/>
-  Usamos um arquivo JSON com nomes, emails e datas de nascimento, mas os telefones são gerados sem fonte externa.
-</p>
+> [!NOTE]
+><p>
+>  Esta aplicação retorna dados fictícios de clientes, como: nome, email, data de nascimento e telefone. <br/>
+>  Usamos um arquivo JSON com nomes, emails e datas de nascimento, mas os telefones são gerados sem fonte externa.
+></p>
 
 <br/>
 
@@ -23,7 +24,8 @@
 <h2>Como funciona?</h2>
 <br/>
 
-<p>Pelo motivo de este projeto ser relativamente pequeno, não foi seguido algum padrão de arquitetura, mas existe a boa prática de separação de responsabilidades.</p>
+> [!NOTE]
+> <p>Pelo motivo de este projeto ser relativamente pequeno, não foi seguido algum padrão de arquitetura, mas existe a boa prática de separação de responsabilidades.</p>
 <br/>
 
 <h2>Classes:</h2>
@@ -33,5 +35,7 @@
   <li><h3>GeraTelefone:</h3> Responsável por gerar um número de telefone, seja fixo ou móvel, formatado ou não.</li>
 </ul>
 <br/>
-<p>Ao final, todos os dados são reunidos na Program.cs, instanciando um objeto "Cliente", chamando seu método "DadosGerados".</p>
+
+> [!IMPORTANT]
+> <p>Ao final, todos os dados são reunidos na Program.cs, instanciando um objeto "Cliente", chamando seu método "DadosGerados".</p>
 
